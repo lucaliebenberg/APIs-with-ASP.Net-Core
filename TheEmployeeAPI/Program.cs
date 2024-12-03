@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc;
+
 var builder = WebApplication.CreateBuilder(args);
 var employees = new List<Employee>()
 {
@@ -38,7 +40,7 @@ employeeRoute.MapGet("{id:int}", (int id) =>
     return Results.Ok(employee);
 });
 
-employeeRoute.MapGet(string.Empty, (Employee employee) =>
+employeeRoute.MapPost(string.Empty, ([FromBody] Employee employee, HttpContext context) =>
 {
     employee.Id = employees.Max(e => e.Id) + 1; // not using a DB
     employees.Add(employee);
